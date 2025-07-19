@@ -38,7 +38,7 @@
 		</h2>
 	{/snippet}
 
-	<form onsubmit={(e) => { e.preventDefault(); addTask() }} class="scrollbar-thumb-dark overflow-y-auto h-90">
+	<form onsubmit={(e) => { e.preventDefault(); addTask() }} class="overflow-y-auto h-90">
         <div class="flex flex-col mb-4">
             <h2 class="text-orange-500">Task Name</h2>
             <input bind:value={taskInfo.name} placeholder="What's cookin'?" class="bg-white/6 backdrop-blur-sm focus:outline-none rounded-lg p-2" type="text"/>

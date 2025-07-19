@@ -22,7 +22,7 @@
 {#if tasks?.length}
 <div class="group relative flex flex-col bg-white/5 backdrop-blur-sm border-2 border-gray-700/60 hover:border-orange-500/80 w-full h-50 rounded-2xl transition-colors duration-300">
     
-    <div class="w-full h-full overflow-y-auto py-4 px-6 scrollbar-thumb-dark">
+    <div class="w-full h-full overflow-y-auto py-4 px-6">
         <ul class="text-lg">
             {#each tasks as task (task.id)}
                 <Task taskInfo={task}/>
@@ -30,7 +30,7 @@
         </ul>
     </div>
 
-    <div class="font-dot leading-snug absolute -bottom-6 text-gray-400/50 group-hover:text-gray-400/70 transition-colors duration-300 pointer-events-none -right-5 text-xs">
+    <div class="-z-10 font-dot leading-snug absolute -bottom-6 text-gray-400/50 group-hover:text-gray-400/70 transition-colors duration-300 pointer-events-none -right-5 text-xs">
         <pre>
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢇⠀⠃⣈⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀

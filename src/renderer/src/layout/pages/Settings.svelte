@@ -32,7 +32,7 @@
         <p class="text-lg text-orange-500 font-semibold mb-2">Google API Key</p>
         <div class="w-full flex gap-2">
           <input bind:value={config.keys.google} placeholder="Keep your key secured..." class="bg-white/6 backdrop-blur-sm focus:outline-none w-full rounded-lg py-2 px-3" type={ toggle.visibility.google ? 'text' : 'password'}/>
-          <button onclick={() => { toggle.visibility.google = !toggle.visibility.google }} type="button" class="hover:scale-110 transition-all duration-300 cursor-pointer block bg-gradient-to-br from-orange-500 to-orange-600 p-2 rounded-lg">
+          <button onclick={() => { toggle.visibility.google = !toggle.visibility.google }} type="button" class="hover:scale-110 transition-all duration-300 cursor-pointer block bg-white/6 p-2 rounded-lg">
             <img src={ toggle.visibility.google ? 'src/assets/eye.svg' : 'src/assets/eye-slash.svg'} alt="icon" class="w-6"/>
           </button>
         </div>

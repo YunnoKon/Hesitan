@@ -11,16 +11,9 @@
     @apply bg-transparent rounded-3xl;
 }
 
-.scrollbar-thumb-light::-webkit-scrollbar-thumb:hover {
-    background-color: #2d2d2d;
-    cursor: pointer;
+::-webkit-scrollbar-thumb:hover {
+    @apply cursor-pointer bg-white/10;
 }
-
-.scrollbar-thumb-dark::-webkit-scrollbar-thumb:hover {
-    background-color: #1e1e1e;
-    cursor: pointer;
-}
-
 /* Checkbox Styling */
 input[type=checkbox]:focus
 {

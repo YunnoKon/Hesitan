@@ -24,8 +24,8 @@ export const handlers = {
         {
             role: "system",
             content: replaceTemplate(Prompt.roadmap,{
-                startDate:"19/7/2025",
-                endDate:"21/7/2025"
+                startDate:args.startDate,
+                endDate:args.endDate
             })
         },
         { role: "user", content: args.userPrompt },
