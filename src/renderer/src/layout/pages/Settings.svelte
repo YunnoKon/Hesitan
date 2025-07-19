@@ -14,13 +14,12 @@
   })
   
   // Initialize Config
-  window.electron.ipcRenderer.send('config.get')
-  window.electron.ipcRenderer.once('response.get',(_,args) => {
+  window.api.getConfig().then((args) => {
     config = args;
   })
   
   const saveConfig = () => {
-    window.electron.ipcRenderer.send('config.save',$state.snapshot(config))
+    window.api.saveConfig($state.snapshot(config))
     createAlert("Settings: Changes Saved")
   }
 </script>

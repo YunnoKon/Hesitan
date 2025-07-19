@@ -15,7 +15,7 @@
       createAlert("Agent: User Prompt is Required!")
       return;
     }
-    window.electron.ipcRenderer.send('agent.roadmap',$state.snapshot(inputInfo))
+    window.api.generateRoadmap($state.snapshot(inputInfo))
   }
 </script>
 <div class="relative w-full">

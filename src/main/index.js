@@ -1,13 +1,9 @@
-import { app, shell, BrowserWindow, ipcMain, safeStorage } from 'electron'
+import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon_2.png?asset'
-import { promises as fs } from 'fs';
 
-// AI agent utilities & tools
-import Schema from './schema';
-import Prompt from './prompt.json';
-import { Agent } from "@mastra/core/agent";
+import { handlers } from './handlers';
 
 function createWindow() {
   // Create the browser window.
@@ -47,33 +43,6 @@ function createWindow() {
   }
 }
 
-let configPath = join(app.getPath('userData'), 'app_config.enc');
-
-async function storeConfig(config){
-  if(safeStorage.isEncryptionAvailable()){
-    const jsonString = JSON.stringify(config)
-    const encrypted = safeStorage.encryptString(jsonString)
-    await fs.writeFile(configPath, encrypted);
-  }
-}
-
-async function getConfig() {
-  if (safeStorage.isEncryptionAvailable()) {
-    const encrypted = await fs.readFile(configPath);
-    if (encrypted) {
-      const buffer = Buffer.from(encrypted, 'base64');
-      return JSON.parse(safeStorage.decryptString(buffer));
-    }
-  }
-  return null;
-}
-
-function replaceTemplate(template, data) {
-  return template.replace(/\{(\w+)\}/g, (match, key) =>
-    key in data ? data[key] : match
-  );
-}
-
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
@@ -88,43 +57,9 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  // IPC test
-  ipcMain.on('config.save', (_,args) => {
-    storeConfig(args)
-  })
-
-  ipcMain.on('config.get', async(_,args) => {
-    const windows = BrowserWindow.getAllWindows();
-    const mainWindow = windows[0];
-    mainWindow.webContents.send('response.get',await getConfig());
-  })
-
-  ipcMain.on('agent.roadmap', async(_,args) => {
-    const { createGoogleGenerativeAI } = await import("@ai-sdk/google");
-    let config = await getConfig()
-    let provider = createGoogleGenerativeAI({
-      apiKey:config.keys.google
-    })
-    let agent = new Agent({
-      name: "Roadmap Assistant",
-      model: provider(args.modelName, {
-        useSearchGrounding:true,
-      }),
-      instructions: "You are a helpful assistant",
-    });
-    const response = await agent.generate([
-      {
-        role: "system",
-        content: replaceTemplate(Prompt.roadmap,{
-          startDate:"18/7/2025",
-          endDate:"20/7/2025"
-        })
-      },
-      { role: "user", content: args.userPrompt },
-    ],{
-        output: Schema.roadmap
-    });
-    console.log(response.object)
+  // Register all handlers
+  Object.entries(handlers).forEach(([channel, handler]) => {
+    ipcMain.handle(channel, handler)
   })
 
   createWindow()
