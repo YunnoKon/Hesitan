@@ -17,12 +17,12 @@
 /* Checkbox Styling */
 input[type=checkbox]:focus
 {
-    background: transparent url(./dot.svg) no-repeat center;
+    background: transparent url(/dot.svg) no-repeat center;
 }
 
 input[type=checkbox]
 {
-    background:transparent url(./dot.svg) no-repeat center;
+    background:transparent url(/dot.svg) no-repeat center;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -37,7 +37,7 @@ input[type=checkbox]
 
 input[type=checkbox]:checked
 {
-    background: transparent url(./check.svg) no-repeat center;
+    background: transparent url(/check.svg) no-repeat center;
 }
 
 input[type='checkbox']:disabled{

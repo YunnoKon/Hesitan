@@ -32,6 +32,6 @@ export const handlers = {
         ],{
             output: Schema.roadmap
         });
-        console.log(response.object)
+        return response.object
     }
 }

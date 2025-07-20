@@ -1,10 +1,5 @@
 <script>
-    /*
-    Property
-    Today: Specify the day to query the todo list
-    Modal: Adjusted CSS For Modal Display
-    */
-    let { today, modal = false } = $props()
+    let { today } = $props()
 
     import { liveQuery } from "dexie";
     import { db } from "../db"
@@ -30,7 +25,7 @@
         </ul>
     </div>
 
-    <div class="-z-10 font-dot leading-snug absolute -bottom-6 text-gray-400/50 group-hover:text-gray-400/70 transition-colors duration-300 pointer-events-none -right-5 text-xs">
+    <div class="-z-10 font-dot leading-snug absolute -bottom-6 text-gray-400/40 group-hover:text-gray-400/60 transition-colors duration-300 pointer-events-none -right-5 text-xs">
         <pre>
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢇⠀⠃⣈⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀

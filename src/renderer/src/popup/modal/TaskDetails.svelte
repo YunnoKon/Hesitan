@@ -18,7 +18,7 @@
 				{data.name}
 			</h2>
 			<button onclick={deleteTask} class="mb-1 transition ease-in hover:scale-125 hover:cursor-pointer">
-				<img src='src/assets/delete.svg' alt="icon" class="w-5"/>
+				<img src='delete.svg' alt="icon" class="w-5"/>
 			</button>
 		</div>
 	{/snippet}

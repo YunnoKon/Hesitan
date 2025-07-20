@@ -35,7 +35,7 @@
 
 	<div>
 		<h2 class=" text-orange-500 font-semibold mb-2">Task List</h2>
-        <TaskList today={selectedDate} modal=True/>
+        <TaskList today={selectedDate}/>
     </div>
 
 </Modal>

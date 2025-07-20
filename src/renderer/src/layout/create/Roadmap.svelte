@@ -1,4 +1,5 @@
 <script>
+  import { db } from "../../db"
   import { createAlert, createModal } from "../../states/PopUpState.svelte"
   import { getModel } from "../../utils";
 
@@ -12,12 +13,14 @@
     day:"00"
   })
 
-  let modelObj = getModel(inputInfo.preferredProvider)
-  let modelList = Object.keys(modelObj)
-  // Default to the first model it fetches
-  inputInfo.modelName = modelList[0]
+  let generating = $state(false);
+  let roadmapPreview = $state([]);
 
-  const generateRoadmap = () => {
+  let modelList = Object.entries(getModel(inputInfo.preferredProvider))
+  // Default to the first model it fetches
+  inputInfo.modelName = modelList[0][1]
+
+  const generateRoadmap = async () => {
     if(!inputInfo.userPrompt){ 
       createAlert("Agent: User Prompt is Required!")
       return;
@@ -27,6 +30,7 @@
       return;
     }
     
+    roadmapPreview = [];
     let request = $state.snapshot(inputInfo)
 
     // Calculating End Date
@@ -34,14 +38,22 @@
     endDate.setMonth(endDate.getMonth() + Number(inputInfo.month))
     endDate.setDate(endDate.getDate() + Number(inputInfo.day))
     request.endDate = endDate.toLocaleDateString('en-CA')
-    
-    // Mapping model name to model id
-    request.modelName = modelObj[inputInfo.modelName]
 
-    window.api.generateRoadmap(request)
+    generating = true;
+    let response = await window.api.generateRoadmap(request)
+    // Filter invalid period
+    response = response.filter((e) => {
+      return (e.hour>0 || e.minute>0)
+    })
+
+    //await db.task.bulkAdd(response)
+    // The current code is for testing purpose, there should be a confirmation button for user to finalize
+    // Pagination will need to be added in order for roadmap over 1 year
+    roadmapPreview = response
+    generating = false;
   }
 </script>
-<div class="relative w-full">
+<div class="relative w-full pb-10">
 
   <div class="relative mb-3">
     <textarea bind:value={inputInfo.userPrompt} placeholder="Write your goals clearly..." class="font-medium scrollbar-thumb-dark h-60 scroll-pr-1 focus:outline-0 resize-none bg-white/6 backdrop-blur-sm p-5 pb-12 w-full rounded-xl"></textarea>
@@ -49,8 +61,8 @@
     <div class="backdrop-blur-xs rounded-lg gap-2 flex items-center justify-between absolute bottom-[0.45rem] right-0 rounded-b-2xl bg-transparent w-full py-3 px-6">
       <div>
         <select bind:value={inputInfo.modelName} name="model" class=" bg-transparent [&>option]:bg-[#1b1d20] focus:outline-0 text-white font-semibold text-sm block w-full pr-3">
-          {#each modelList as modelName}
-            <option value={modelName}>{modelName}</option>
+          {#each modelList as [modelName,modelId]}
+            <option value={modelId}>{modelName}</option>
           {/each}
         </select>
       </div>
@@ -68,9 +80,19 @@
     </div>
   </div>
 
-  <div class="w-full">
-    <div>
-      
+  <div class="w-full flex flex-col gap-2">
+    {#if generating}
+    <div class="p-4 rounded-lg items-center justify-center flex-col flex h-70 border-gray-700/60 animate-pulse border-2">
+      <h1 class="text-gray-200 font-dot">(╥﹏╥)</h1>
+      <h1 class="font-semibold text-3xl text-orange-500 font-dot">Generating...</h1>
     </div>
+    {/if}
+    {#each roadmapPreview as roadmap}
+    <div class="p-4 rounded-lg bg-white/5 border-gray-700/60 border-2">
+      <p class="text-orange-500 text-xs">{roadmap.date}</p>
+      <h2>{roadmap.name}</h2>
+      <p class="text-sm text-gray-400">{roadmap.description}</p>
+    </div>
+    {/each}
   </div>
 </div>

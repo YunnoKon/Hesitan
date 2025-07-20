@@ -1,10 +1,6 @@
 import { mount } from 'svelte'
 
 import './assets/global.css'
-import './assets/alert.svg'
-import './assets/delete.svg'
-import './assets/eye.svg'
-import './assets/eye-slash.svg'
 
 import App from './App.svelte'
 
