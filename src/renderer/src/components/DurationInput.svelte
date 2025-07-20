@@ -30,7 +30,7 @@
     <h1 class="text-gray-500">Months</h1>
     <div class="flex flex-col items-center font-bold">
       <button type="button" class="hover:cursor-pointer w-12 h-8 text-xl" onclick={incMonth}>▲</button>
-      <input bind:value={month} class="font-dot text-center text-3xl outline-none w-12" type="text" inputmode="numeric" maxlength="2" onblur={clampHour}/>
+      <input bind:value={month} class="font-dot text-center text-3xl outline-none w-12" type="text" inputmode="numeric" maxlength="2" onblur={clampMonth}/>
       <button type="button" class="hover:cursor-pointer w-12 h-8 text-xl" onclick={decMonth}>▼</button>
     </div>
   </div>
@@ -43,7 +43,7 @@
     <h1 class="text-gray-500">Days</h1>
     <div class="flex flex-col items-center font-bold">
       <button type="button" class="hover:cursor-pointer w-12 h-8 text-xl" onclick={incDay}>▲</button>
-      <input bind:value={day} class="font-dot text-center text-3xl outline-none w-12" type="text" inputmode="numeric" maxlength="2" onblur={clampMinute}/>
+      <input bind:value={day} class="font-dot text-center text-3xl outline-none w-12" type="text" inputmode="numeric" maxlength="2" onblur={clampDay}/>
       <button type="button" class="hover:cursor-pointer w-12 h-8 text-xl" onclick={decDay}>▼</button>
     </div>
   </div>
