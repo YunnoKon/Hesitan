@@ -12,7 +12,7 @@ export const handlers = {
     },
     'agent:roadmap': async(_, args) => {
         let config = await getConfig()
-        let provider = await createProvider("google",config.keys.google)
+        let provider = await createProvider("google",config.providerConfig.google.key)
         let agent = new Agent({
             name: "Roadmap Assistant",
             model: provider(args.modelName, {
