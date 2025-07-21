@@ -2,6 +2,7 @@
   import { db } from "../../db"
   import { createAlert, createModal } from "../../states/PopUpState.svelte"
   import { getModel } from "../../utils";
+  import Pagination from "../../components/Pagination.svelte";
 
   let inputInfo = $state({
     preferredProvider:"google",
@@ -46,11 +47,17 @@
       return (e.hour>0 || e.minute>0)
     })
 
-    //await db.task.bulkAdd(response)
-    // The current code is for testing purpose, there should be a confirmation button for user to finalize
-    // Pagination will need to be added in order for roadmap over 1 year
     roadmapPreview = response
     generating = false;
+  }
+
+  const saveRoadmap = async() => {
+    await db.task.bulkAdd($state.snapshot(roadmapPreview))
+    createAlert("Agent: Roadmap Added To Task List")
+    roadmapPreview = []
+    inputInfo.userPrompt = ""
+    inputInfo.month = "00"
+    inputInfo.day = "00"
   }
 </script>
 <div class="relative w-full pb-10">
@@ -71,7 +78,7 @@
           Duration
         </button>
         <!--svelte-ignore a11y_consider_explicit_label-->
-        <button onclick={() => generateRoadmap()} class="hover:shadow-lg hover:shadow-orange-500/30 hover:cursor-pointer hover:scale-120 transition-all duration-300 block rounded-full bg-gradient-to-br from-orange-500 to-orange-600 p-2">
+        <button onclick={generateRoadmap} class="hover:shadow-lg hover:shadow-orange-500/30 hover:cursor-pointer hover:scale-120 transition-all duration-300 block rounded-full bg-gradient-to-br from-orange-500 to-orange-600 p-2">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 text-white">
             <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
           </svg>
@@ -83,16 +90,23 @@
   <div class="w-full flex flex-col gap-2">
     {#if generating}
     <div class="p-4 rounded-lg items-center justify-center flex-col flex h-70 border-gray-700/60 animate-pulse border-2">
-      <h1 class="text-gray-200 font-dot">(╥﹏╥)</h1>
+      <h1 class="text-gray-200 font-dot">o(╥﹏╥)o</h1>
       <h1 class="font-semibold text-3xl text-orange-500 font-dot">Generating...</h1>
     </div>
     {/if}
-    {#each roadmapPreview as roadmap}
-    <div class="p-4 rounded-lg bg-white/5 border-gray-700/60 border-2">
-      <p class="text-orange-500 text-xs">{roadmap.date}</p>
-      <h2>{roadmap.name}</h2>
-      <p class="text-sm text-gray-400">{roadmap.description}</p>
-    </div>
-    {/each}
+
+    <Pagination bind:data={roadmapPreview} header="Roadmap Preview">
+      {#snippet content(d)}
+        <div class="p-4 rounded-xl bg-white/5">
+          <p class="text-orange-500 text-xs">{d.date}</p>
+          <h2>{d.name}</h2>
+          <p class="text-sm text-gray-400">{d.description}</p>
+        </div>
+      {/snippet}
+    </Pagination>
+
+    {#if roadmapPreview.length}
+    <button onclick={saveRoadmap} class="hover:shadow-lg hover:shadow-white/6 hover:scale-105 transition-all w-50 m-auto font-bold hover:cursor-pointer rounded-lg py-2 bg-white/10">Save To Task List... ?</button>
+    {/if}
   </div>
 </div>
