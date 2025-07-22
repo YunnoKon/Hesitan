@@ -12,12 +12,10 @@ export const handlers = {
     },
     'agent:roadmap': async(_, args) => {
         let config = await getConfig()
-        let provider = await createProvider("google",config.providerConfig.google.key)
+        let provider = await createProvider(config.preferredProvider,config["providerConfig"][config.preferredProvider]["key"])
         let agent = new Agent({
             name: "Roadmap Assistant",
-            model: provider(args.modelName, {
-                useSearchGrounding:true,
-            }),
+            model: provider(args.modelName),
             instructions: "You are a helpful assistant",
         });
         const response = await agent.generate([

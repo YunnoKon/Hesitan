@@ -1,11 +1,12 @@
 <script>
   import { db } from "../../db"
   import { createAlert, createModal } from "../../states/PopUpState.svelte"
+  import { Config } from "../../states/PageState.svelte"
   import { getModel } from "../../utils";
   import Pagination from "../../components/Pagination.svelte";
 
   let inputInfo = $state({
-    preferredProvider:"google",
+    preferredProvider:Config.preferredProvider,
     userPrompt:"",
     modelName:"",
     startDate:new Date().toLocaleDateString('en-CA'),
@@ -17,9 +18,11 @@
   let generating = $state(false);
   let roadmapPreview = $state([]);
 
-  let modelList = Object.entries(getModel(inputInfo.preferredProvider))
-  // Default to the first model it fetches
-  inputInfo.modelName = modelList[0][1]
+  let modelList = $derived(Object.entries(getModel(inputInfo.preferredProvider)))
+
+  // Update preferred provider and default to the first model it fetches
+  $effect(() => { inputInfo.preferredProvider = Config.preferredProvider })
+  $effect(() => { inputInfo.modelName = modelList[0][1] })
 
   const generateRoadmap = async () => {
     if(!inputInfo.userPrompt){ 

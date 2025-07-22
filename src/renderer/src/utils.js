@@ -19,5 +19,20 @@ export function getModel(provider){
         "Gemini 2.0 Flash Lite":"gemini-2.0-flash-lite"
       }
     }
+    break;
+    case "openai":{
+      return {
+        "GPT 4o Mini":"gpt-4o-mini",
+        "GPT 4.1 Mini":"gpt-4.1-mini"
+      }
+    }
+    break;
+    case "anthropic":{
+      return {
+        "Claude Haiku 3.5":"claude-3-5-haiku-latest",
+        "Claude Sonnet 4":"claude-sonnet-4-20250514",
+        "Claude Opus 4":"claude-opus-4-20250514"
+      }
+    }
   }
 }

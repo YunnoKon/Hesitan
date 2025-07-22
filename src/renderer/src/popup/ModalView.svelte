@@ -7,12 +7,14 @@
   import TaskDetails from './modal/TaskDetails.svelte'
   import DateDetails from './modal/DateDetails.svelte'
   import DateSelect from './modal/DateSelect.svelte'
+  import TaskDeletion from './modal/TaskDeletion.svelte'
 
   const ModalType = { 
     TaskCreation,
     TaskDetails,
     DateDetails,
-    DateSelect
+    DateSelect,
+    TaskDeletion
   }
 </script>
 

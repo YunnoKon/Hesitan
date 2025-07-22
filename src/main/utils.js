@@ -15,12 +15,25 @@ async function createProvider(provider, apiKey){
     let providerInstance;
     switch(provider){
         case "google":{
-            const { createGoogleGenerativeAI } = await import("@ai-sdk/google");
-            providerInstance = createGoogleGenerativeAI({
-                apiKey:apiKey
-            })
+          const { createGoogleGenerativeAI } = await import("@ai-sdk/google");
+          providerInstance = createGoogleGenerativeAI({
+            apiKey:apiKey
+          })
         }
         break;
+        case "openai":{
+          const { createOpenAI } = await import("@ai-sdk/openai")
+          providerInstance = createOpenAI({
+            apiKey:apiKey
+          })
+        }
+        break;
+        case "anthropic":{
+          const { createAnthropic } = await import("@ai-sdk/anthropic")
+          providerInstance = createOpenAI({
+            apiKey:apiKey
+          })
+        }
     }
     return providerInstance;
 }
