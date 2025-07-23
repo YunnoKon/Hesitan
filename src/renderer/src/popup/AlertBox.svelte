@@ -20,7 +20,7 @@
     bind:this={box}
     popover
 >
-    <div class="flex font-semibold bg-white/7 py-2 px-6 gap-2 rounded-lg text-white">
+    <div class="flex font-semibold bg-white/7 py-2 px-6 gap-4 rounded-lg text-white">
         <img src='alert.svg' alt="icon" class="w-5"/>
         <h1>{message}</h1>
     </div>

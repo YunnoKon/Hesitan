@@ -45,6 +45,12 @@
 
     generating = true;
     let response = await window.api.generateRoadmap(request)
+
+    if(response?.failed){
+      generating = false;
+      createAlert(response.message)
+      return;
+    }
     // Filter invalid period
     response = response.filter((e) => {
       return (e.hour>0 || e.minute>0)

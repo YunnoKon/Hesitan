@@ -30,10 +30,11 @@ async function createProvider(provider, apiKey){
         break;
         case "anthropic":{
           const { createAnthropic } = await import("@ai-sdk/anthropic")
-          providerInstance = createOpenAI({
+          providerInstance = createAnthropic({
             apiKey:apiKey
           })
         }
+        break;
     }
     return providerInstance;
 }
@@ -49,13 +50,36 @@ async function storeConfig(config){
 
 async function getConfig() {
   if (safeStorage.isEncryptionAvailable()) {
-    const encrypted = await fs.readFile(configPath);
-    if (encrypted) {
-      const buffer = Buffer.from(encrypted, 'base64');
-      return JSON.parse(safeStorage.decryptString(buffer));
+    try {
+      const encrypted = await fs.readFile(configPath);
+      if (encrypted) {
+        const buffer = Buffer.from(encrypted, 'base64');
+        return JSON.parse(safeStorage.decryptString(buffer));
+      }
+    } catch {
+      // Fallback to return nothing to assign
+      return new Object();
     }
   }
   return null;
 }
 
-export { replaceTemplate, createProvider, storeConfig, getConfig }
+// Format Error Message
+function classifyError(errorText) {
+  const errorRules = [
+    { pattern: /key/, message: 'Agent: Invalid API Key Provided.' },
+    { pattern: /quota|credits/, message: 'Agent: You’ve hit your usage limit.' },
+  ];
+  const text = errorText.toLowerCase();
+  
+  for (const rule of errorRules) {
+    if (rule.pattern.test(text)) {
+      return rule.message
+    }
+  }
+  
+  // Fallback to debug
+  return errorText;
+}
+
+export { replaceTemplate, createProvider, storeConfig, getConfig, classifyError }

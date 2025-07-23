@@ -1,11 +1,14 @@
 <script>
   import { createAlert, createModal } from "../../states/PopUpState.svelte"
   import { Config } from "../../states/PageState.svelte"
+  console.log(Config)
 
   window.api.getConfig().then((args) => {
+    console.log(args)
     Object.assign(Config, { ...args });
   })
 
+  console.log(Config)
   let providerList = $derived(Object.keys(Config.providerConfig))
   let toggleVisibility = $state({
     key: false
