@@ -38,7 +38,7 @@
     </div>
     <div class="p-4 bg-white/6 rounded-lg mb-3">
       <h1 class="text-sm font-bold mb-3">Provider Settings</h1>
-      <p class="text-orange-500 font-semibold">API Key</p>
+      <p class="text-orange-500 font-semibold text-sm">API Key</p>
       <div class="w-full flex gap-2">
           <input bind:value={Config["providerConfig"][Config.preferredProvider]["key"]} placeholder="Keep your key secured..." class="bg-white/6 backdrop-blur-sm focus:outline-none w-full rounded-lg py-2 px-3" type={ toggleVisibility.key ? 'text' : 'password'}/>
           <button onclick={() => { toggleVisibility.key = !toggleVisibility.key }} type="button" class="hover:scale-110 transition-all duration-300 cursor-pointer block bg-white/6 p-2 rounded-lg">
@@ -47,9 +47,23 @@
       </div>
     </div>
     <div class="p-4 bg-white/6 rounded-lg mb-3">
+      <h1 class="text-sm font-bold mb-3">Monitoring Settings</h1>
+      <div class="flex justify-between">
+        <p class="text-sm">Allow Monitoring</p>
+        <label class="inline-flex items-center cursor-pointer">
+          <input type="checkbox" value="" class="sr-only peer">
+          <div class="relative w-11 h-6 peer-focus:outline-none rounded-full peer bg-white/10 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white  after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-500"></div>
+        </label>
+      </div>
+      
+    </div>
+    <div class="p-4 bg-white/6 rounded-lg mb-3">
       <h1 class="text-sm font-bold mb-3">Danger Zone</h1>
       <button onclick={() => { createModal("TaskDeletion") }} class="bg-gradient-to-br from-orange-500 to-orange-600 py-2 px-6 rounded-lg font-semibold w-full hover:cursor-pointer hover:shadow-lg hover:shadow-orange-500/30 transition-all">Clear Task Data</button>
     </div>
-    <button onclick={saveConfig} class="hover:shadow-lg hover:shadow-white/6 hover:scale-105 transition-all w-50 font-bold hover:cursor-pointer rounded-lg py-2 bg-white/6">Save Settings</button>
+    <div class="mb-15 bg-white/9 backdrop-blur-2xl fixed bottom-0 flex items-center py-3 px-5 rounded-lg justify-between w-[63.3%]">
+      <h1><span class="font-bold text-orange-500">Warning:</span> You have unsaved changes!</h1>
+      <button onclick={saveConfig} class="hover:shadow-lg hover:shadow-white/6 hover:scale-105 transition-all w-50 font-bold hover:cursor-pointer rounded-lg py-2 bg-white/10">Save Settings</button>
+    </div>
   </div>
 </div>

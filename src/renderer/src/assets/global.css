@@ -15,12 +15,12 @@
     @apply cursor-pointer bg-white/10;
 }
 /* Checkbox Styling */
-input[type=checkbox]:focus
+.task-input input[type=checkbox]:focus
 {
     background: transparent url(/dot.svg) no-repeat center;
 }
 
-input[type=checkbox]
+.task-input input[type=checkbox]
 {
     background:transparent url(/dot.svg) no-repeat center;
     appearance: none;
@@ -35,12 +35,12 @@ input[type=checkbox]
     color:transparent;
 }
 
-input[type=checkbox]:checked
+.task-input input[type=checkbox]:checked
 {
     background: transparent url(/check.svg) no-repeat center;
 }
 
-input[type='checkbox']:disabled{
+.task-input input[type='checkbox']:disabled{
     pointer-events: none;
 }
 
@@ -54,6 +54,35 @@ input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
 -webkit-appearance: none;
 margin: 0;
+}
+
+/* Markdown */
+.markdown h1 {
+    @apply text-2xl font-bold;
+}
+
+.markdown h2 {
+    @apply text-xl font-bold;
+}
+
+.markdown h3 {
+    @apply text-lg font-bold;
+}
+
+.markdown a {
+    @apply text-blue-500;
+}
+
+.markdown table {
+    @apply w-full text-left rtl:text-right;
+}
+
+.markdown tr {
+    @apply bg-white/6 border-b border-gray-600/70;
+}
+
+.markdown th, td {
+    @apply px-3 py-1;
 }
 
 @layer base {

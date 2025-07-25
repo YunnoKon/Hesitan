@@ -5,6 +5,21 @@ import icon from '../../resources/icon.png?asset'
 
 import { handlers } from './handlers';
 
+// Handling second instance
+const gotTheLock = app.requestSingleInstanceLock()
+if (!gotTheLock) app.quit()
+
+app.on('second-instance', () => {
+  const windows = BrowserWindow.getAllWindows()
+  if (windows.length > 0) {
+    const mainWindow = windows[0]
+    if (mainWindow.isMinimized()) {
+      mainWindow.restore()
+    }
+    mainWindow.focus()
+  }
+})
+
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({

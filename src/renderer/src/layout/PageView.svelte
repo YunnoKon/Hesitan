@@ -7,12 +7,14 @@
   import Calendar from './pages/Calendar.svelte'
   import Create from './pages/Create.svelte'
   import Settings from './pages/Settings.svelte';
+  import Chat from './pages/Chat.svelte';
 
   const pages = { 
     today: Today, 
     calendar: Calendar,
     create: Create,
-    settings: Settings
+    settings: Settings,
+    chat: Chat
   }
 </script>
 
