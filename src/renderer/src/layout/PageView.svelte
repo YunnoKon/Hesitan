@@ -5,16 +5,14 @@
   // Pages
   import Today from './pages/Today.svelte';
   import Calendar from './pages/Calendar.svelte'
-  import Create from './pages/Create.svelte'
   import Settings from './pages/Settings.svelte';
-  import Chat from './pages/Chat.svelte';
+  import Create from './pages/Create.svelte';
 
   const pages = { 
     today: Today, 
     calendar: Calendar,
-    create: Create,
     settings: Settings,
-    chat: Chat
+    create: Create
   }
 </script>
 

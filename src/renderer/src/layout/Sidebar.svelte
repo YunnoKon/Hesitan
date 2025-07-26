@@ -8,7 +8,6 @@
     <SidebarButton title="Today"/>
     <SidebarButton title="Calendar"/>
     <SidebarButton title="Create"/>
-    <SidebarButton title="Chat"/>
   </div>
   <div>
     <SidebarButton title="Settings"/>

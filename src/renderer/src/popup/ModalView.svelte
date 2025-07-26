@@ -6,15 +6,15 @@
   import TaskCreation from './modal/TaskCreation.svelte'
   import TaskDetails from './modal/TaskDetails.svelte'
   import DateDetails from './modal/DateDetails.svelte'
-  import DateSelect from './modal/DateSelect.svelte'
   import TaskDeletion from './modal/TaskDeletion.svelte'
+  import RoadmapPreview from './modal/RoadmapPreview.svelte'
 
   const ModalType = { 
     TaskCreation,
     TaskDetails,
     DateDetails,
-    DateSelect,
-    TaskDeletion
+    TaskDeletion,
+    RoadmapPreview
   }
 </script>
 

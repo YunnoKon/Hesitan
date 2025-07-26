@@ -7,8 +7,9 @@ const api = {
   getConfig: () => ipcRenderer.invoke('config:get'),
 
   // Agent
-  generateRoadmap: (args) => ipcRenderer.invoke('agent:roadmap',args),
+  chat: (args) => ipcRenderer.send('agent:chat',args),
   onChatStream: (callback) => ipcRenderer.on('agent:chatStream', (_event, value) => callback(value)),
+  onRoadmapResponse: (callback) => ipcRenderer.on('agent:roadmapResponse', (_event, value) => callback(value)),
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

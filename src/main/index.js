@@ -4,6 +4,7 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 
 import { handlers } from './handlers';
+import { events } from './events'
 
 // Handling second instance
 const gotTheLock = app.requestSingleInstanceLock()
@@ -75,6 +76,10 @@ app.whenReady().then(() => {
   // Register all handlers
   Object.entries(handlers).forEach(([channel, handler]) => {
     ipcMain.handle(channel, handler)
+  })
+
+  Object.entries(events).forEach(([channel, onEvent]) => {
+    ipcMain.on(channel, onEvent)
   })
 
   createWindow()

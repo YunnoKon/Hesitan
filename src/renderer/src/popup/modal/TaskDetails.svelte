@@ -28,7 +28,7 @@
 			{data.description}
 		</p>
     	<div class="flex flex-col">
-        	<div class="flex items-center">
+        	<div class="task-input flex items-center">
 				<input type="checkbox" disabled=True>
         		<p class="text-orange-500">pending</p>
 			</div>
