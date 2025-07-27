@@ -24,6 +24,7 @@ export const events = {
             }),
             outputSchema: z.object({ status: z.string() }),
             execute: async ({ context }) => {
+                e.sender.send('agent:roadmapStart')
                 const response = await roadmapAgent.generate([
                     {
                         role: "system",
@@ -33,7 +34,7 @@ export const events = {
                 ],{
                     output: Schema.roadmap
                 });
-                e.sender.send('agent:roadmapResponse',response.object)
+                e.sender.send('agent:roadmapEnd',response.object)
                 return { status: "Success. Roadmap Generated." }
             },
         });
@@ -53,5 +54,6 @@ export const events = {
         for await (const chunk of resp.textStream) { 
             e.sender.send('agent:chatStream', chunk)
         }
+        e.sender.send('agent:chatStreamEnd')
     }
 }

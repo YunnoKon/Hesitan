@@ -85,6 +85,18 @@ margin: 0;
     @apply px-3 py-1;
 }
 
+.markdown ol {
+    @apply py-1 list-decimal list-inside flex flex-col gap-1;
+}
+
+.markdown ul {
+    @apply py-1 list-disc list-inside flex flex-col gap-1;
+}
+
+.markdown li p {
+    @apply inline;
+}
+
 @layer base {
     body {
         @apply select-none bg-black;

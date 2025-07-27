@@ -9,7 +9,9 @@ const api = {
   // Agent
   chat: (args) => ipcRenderer.send('agent:chat',args),
   onChatStream: (callback) => ipcRenderer.on('agent:chatStream', (_event, value) => callback(value)),
-  onRoadmapResponse: (callback) => ipcRenderer.on('agent:roadmapResponse', (_event, value) => callback(value)),
+  onChatStreamEnd: (callback) => ipcRenderer.on('agent:chatStreamEnd', (_event, value) => callback(value)),
+  onRoadmapStart: (callback) => ipcRenderer.on('agent:roadmapStart', (_event, value) => callback(value)),
+  onRoadmapEnd: (callback) => ipcRenderer.on('agent:roadmapEnd', (_event, value) => callback(value)),
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
