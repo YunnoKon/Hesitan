@@ -1,6 +1,6 @@
 import { Agent, createTool } from "@mastra/core"
 import { DateTool } from "./tools"
-import { createProvider, getConfig, replaceTemplate } from "./utils"
+import { classifyError, createProvider, getConfig, replaceTemplate } from "./utils"
 import Prompt from './prompt.json';
 import Schema from './schema.js';
 import { z } from 'zod'
@@ -50,7 +50,12 @@ export const events = {
                 DateTool
             }
         });
-        const resp = await agent.stream(args.chatHistory)
+        const resp = await agent.stream(args.chatHistory,{
+            temperature:args.agentSettings.temperature,
+            onError:(err) => {
+                e.sender.send('agent:chatError', classifyError(err.error.message))
+            }
+        })
         for await (const chunk of resp.textStream) { 
             e.sender.send('agent:chatStream', chunk)
         }

@@ -8,13 +8,17 @@
   import DateDetails from './modal/DateDetails.svelte'
   import TaskDeletion from './modal/TaskDeletion.svelte'
   import RoadmapPreview from './modal/RoadmapPreview.svelte'
+  import ChatDeletion from './modal/ChatDeletion.svelte'
+  import ChatSettings from './modal/ChatSettings.svelte'
 
   const ModalType = { 
     TaskCreation,
     TaskDetails,
     DateDetails,
     TaskDeletion,
-    RoadmapPreview
+    RoadmapPreview,
+    ChatDeletion,
+    ChatSettings
   }
 </script>
 

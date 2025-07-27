@@ -2,13 +2,16 @@
   import { marked } from 'marked'
   import { Config } from "../../states/PageState.svelte"
   import { getModel } from "../../utils";
-  import { createModal } from '../../states/PopUpState.svelte'
+  import { createAlert, createModal } from '../../states/PopUpState.svelte'
 
   let inputInfo = $state({
     preferredProvider:Config.preferredProvider,
     userPrompt:"",
     modelName:"",
-    chatHistory:[]
+    chatHistory:[],
+    agentSettings:{
+      temperature:1.0
+    }
   })
   let messageInfo = $state({
     attachment:[],
@@ -53,12 +56,30 @@
     lockInput = true
   }
 
+  const clearChatHistory = () => {
+    createModal("ChatDeletion",{
+      chatHistory:inputInfo.chatHistory, 
+      msg:messageInfo 
+    })
+  }
+
+  const openChatSettings = () => {
+    createModal("ChatSettings",inputInfo.agentSettings)
+  }
+
   window.api.onChatStream((args) => {
     inputInfo.chatHistory[inputInfo.chatHistory.length-1].content += args;
   })
 
   window.api.onChatStreamEnd(() => {
     lockInput = false;
+  })
+
+  window.api.onChatError((args) => {
+    createAlert(args)
+    inputInfo.chatHistory.length = 0
+    messageInfo.hasAttachment.length = 0
+    messageInfo.attachment.length = 0
   })
 
   window.api.onRoadmapStart(() => {
@@ -129,12 +150,18 @@
         class="max-h-30 min-h-14 w-full font-medium scrollbar-thumb-dark scroll-pr-1 focus:outline-0 resize-none bg-white/6 p-4 rounded-xl rounded-b-none"
       ></textarea>
       <div class="bg-white/6 flex items-center px-4 py-3 justify-between rounded-b-xl">
-        <div>
-          <select bind:value={inputInfo.modelName} name="model" class=" bg-transparent [&>option]:bg-[#1b1d20] focus:outline-0 text-white font-semibold text-sm block w-full pr-3">
-            {#each modelList as [modelName,modelId]}
-              <option value={modelId}>{modelName}</option>
-            {/each}
-          </select>
+        <div class="flex gap-2">
+            <select bind:value={inputInfo.modelName} name="model" class=" bg-transparent [&>option]:bg-[#1b1d20] focus:outline-0 text-white font-semibold text-sm block w-full pr-3">
+              {#each modelList as [modelName,modelId]}
+                <option value={modelId}>{modelName}</option>
+              {/each}
+            </select>
+            <button onclick={openChatSettings} class="transition-all hover:rotate-120 hover:scale-115 cursor-pointer">
+              <img alt="settings" class="w-7 h-7" src="settings.svg"/>
+            </button>
+            <button onclick={clearChatHistory} class="transition-all hover:rotate-120 hover:scale-115 cursor-pointer">
+              <img alt="reset" class="w-7 h-7" src="reset.svg"/>
+            </button>
         </div>
         <button disabled={lockInput} onclick={sendMessage} class="disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-orange-500/30 hover:cursor-pointer hover:scale-120 transition-all duration-300 block rounded-full bg-gradient-to-br from-orange-500 to-orange-600 p-2">
           <img alt="send" class="w-5 h-5" src="send.svg"/>

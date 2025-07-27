@@ -8,6 +8,7 @@ const api = {
 
   // Agent
   chat: (args) => ipcRenderer.send('agent:chat',args),
+  onChatError: (callback) => ipcRenderer.on('agent:chatError', (_event, value) => callback(value)),
   onChatStream: (callback) => ipcRenderer.on('agent:chatStream', (_event, value) => callback(value)),
   onChatStreamEnd: (callback) => ipcRenderer.on('agent:chatStreamEnd', (_event, value) => callback(value)),
   onRoadmapStart: (callback) => ipcRenderer.on('agent:roadmapStart', (_event, value) => callback(value)),
