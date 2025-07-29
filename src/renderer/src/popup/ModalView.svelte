@@ -2,24 +2,17 @@
   // Importing States
   import { PopUpState } from '../states/PopUpState.svelte'
 
-  // Modal
-  import TaskCreation from './modal/TaskCreation.svelte'
-  import TaskDetails from './modal/TaskDetails.svelte'
-  import DateDetails from './modal/DateDetails.svelte'
-  import TaskDeletion from './modal/TaskDeletion.svelte'
-  import RoadmapPreview from './modal/RoadmapPreview.svelte'
-  import ChatDeletion from './modal/ChatDeletion.svelte'
-  import ChatSettings from './modal/ChatSettings.svelte'
+  // Auto-loading modal from ./modal
+  const modules = import.meta.glob('./modal/*.svelte', {
+    eager: true,
+    import: 'default'
+  });
 
-  const ModalType = { 
-    TaskCreation,
-    TaskDetails,
-    DateDetails,
-    TaskDeletion,
-    RoadmapPreview,
-    ChatDeletion,
-    ChatSettings
-  }
+  const ModalType = {};
+  Object.entries(modules).forEach(([path, comp]) => {
+    const name = path.split('/').pop().replace('.svelte', '');
+    ModalType[name] = comp;
+  });
 </script>
 
 {#each PopUpState.activeModal as modal (modal.id)}

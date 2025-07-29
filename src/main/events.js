@@ -8,6 +8,11 @@ import { z } from 'zod'
 export const events = {
     'agent:chat': async(e, args) => {
         let config = await getConfig()
+        if(!config){
+            e.sender.send('agent:chatError', classifyError("key"))
+            e.sender.send('agent:chatStreamEnd')
+            return;
+        }
         let provider = await createProvider(args.preferredProvider,config["providerConfig"][args.preferredProvider]["key"])
         let roadmapAgent = new Agent({
             name: "Roadmap Agent",

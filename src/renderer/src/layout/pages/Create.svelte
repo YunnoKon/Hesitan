@@ -47,7 +47,7 @@
   }
 
   const sendMessage = () => {
-    if(lockInput) return;
+    if(lockInput || !inputInfo.userPrompt) return;
     createMessage("user",$state.snapshot(inputInfo.userPrompt))
     window.api.chat($state.snapshot(inputInfo))
     createMessage("assistant","")
@@ -163,7 +163,7 @@
               <img alt="reset" class="w-7 h-7" src="reset.svg"/>
             </button>
         </div>
-        <button disabled={lockInput} onclick={sendMessage} class="disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-orange-500/30 hover:cursor-pointer hover:scale-120 transition-all duration-300 block rounded-full bg-gradient-to-br from-orange-500 to-orange-600 p-2">
+        <button disabled={lockInput || !inputInfo.userPrompt} onclick={sendMessage} class="disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-orange-500/30 hover:cursor-pointer hover:scale-120 transition-all duration-300 block rounded-full bg-gradient-to-br from-orange-500 to-orange-600 p-2">
           <img alt="send" class="w-5 h-5" src="send.svg"/>
         </button>
       </div>

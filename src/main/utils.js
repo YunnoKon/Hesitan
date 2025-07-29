@@ -58,7 +58,7 @@ async function getConfig() {
       }
     } catch {
       // Fallback to return nothing to assign
-      return new Object();
+      return null;
     }
   }
   return null;

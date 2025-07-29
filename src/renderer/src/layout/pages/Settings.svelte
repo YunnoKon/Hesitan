@@ -4,8 +4,9 @@
   import { fly } from "svelte/transition"
   import { sineIn, sineOut } from 'svelte/easing';
 
-  let editableConfig = $state({ ...Config })
+  let editableConfig = $state({ ...$state.snapshot(Config) })
   window.api.getConfig().then((args) => {
+    if(!args) return;
     Object.assign(Config, { ...args });
     Object.assign(editableConfig, { ...args });
   })
