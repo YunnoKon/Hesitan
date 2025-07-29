@@ -17,11 +17,7 @@ export const events = {
         const RoadmapTool = createTool({
             id: "build-roadmap",
             description: "Build a detailed roadmap from your prompt.",
-            inputSchema: z.object({ 
-                prompt: z.string().describe("It should be detailed for better result."),
-                startDate: z.string().describe("In ISO Format"),
-                endDate: z.string().describe("In ISO Format")
-            }),
+            inputSchema: Schema.roadmapToolInput,
             outputSchema: z.object({ status: z.string() }),
             execute: async ({ context }) => {
                 e.sender.send('agent:roadmapStart')

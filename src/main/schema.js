@@ -9,5 +9,10 @@ export default {
         minute: z.number().describe("The number of minutes per day to spend on this task"),
         date: z.string().describe("The date should be outputted in ISO format, the day to execute this task"),
       })
-    )
+    ),
+    roadmapToolInput: z.object({ 
+      prompt: z.string().describe("It should be detailed for better result."),
+      startDate: z.string().describe("In ISO Format"),
+      endDate: z.string().describe("In ISO Format")
+    })
 }
