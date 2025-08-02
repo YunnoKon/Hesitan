@@ -6,7 +6,11 @@ import icon from '../../resources/icon.png?asset'
 import { handlers } from './handlers';
 import { events } from './events'
 
+let mainWindow, widget;
+
 // Handling second instance
+// may need rewrite after changes to multi-window
+/*
 const gotTheLock = app.requestSingleInstanceLock()
 if (!gotTheLock) app.quit()
 
@@ -20,10 +24,11 @@ app.on('second-instance', () => {
     mainWindow.focus()
   }
 })
+*/
 
 function createWindow() {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 900,
     height: 670,
     show: false,
@@ -45,17 +50,56 @@ function createWindow() {
     mainWindow.show()
   })
 
+  mainWindow.on('close',() => {
+    widget?.close()
+  })
+
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)
     return { action: 'deny' }
   })
 
-  // HMR for renderer base on electron-vite cli.
-  // Load the remote URL for development or the local html file for production.
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
     mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
+  }
+}
+
+function createWidget() {
+  // Phantom titlebar issue: https://github.com/electron/electron/issues/46882
+  widget = new BrowserWindow({
+    width: 260,
+    height: 150,
+    resizable:false,
+    autoHideMenuBar:true,
+    transparent:true,
+    alwaysOnTop:true,
+    frame:false,
+    show:false,
+    icon,
+    webPreferences: {
+      preload: join(__dirname, '../preload/index.js'),
+      sandbox: false
+    }
+  })
+
+  if(is.dev && process.env['ELECTRON_RENDERER_URL']){
+    widget.loadURL(process.env['ELECTRON_RENDERER_URL'] + '/widget.html')
+  } else {
+    widget.loadFile(join(__dirname, '../renderer/widget.html'))
+  }
+}
+
+function switchWindow() {
+  if(mainWindow.isVisible()){
+    widget.show()
+    widget.focus()
+    mainWindow.hide()
+  } else {
+    mainWindow.show()
+    mainWindow.focus()
+    widget.hide()
   }
 }
 
@@ -82,7 +126,16 @@ app.whenReady().then(() => {
     ipcMain.on(channel, onEvent)
   })
 
+  // Layer switching handler
+  ipcMain.handle("layer:switch",switchWindow)
+
+  // Layer transmitting handler
+  ipcMain.handle("layer:sendTask",(_,args) => {
+    widget.send("layer:receiveTask",args)
+  })
+
   createWindow()
+  createWidget()
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the

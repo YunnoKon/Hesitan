@@ -55,7 +55,7 @@
             <h2 class="text-orange-500">Time Duration</h2>
             <TimerInput bind:hour={taskInfo.hour} bind:minute={taskInfo.minute}/>
         </div>
-        <button class="hover:cursor-pointer bg-white font-semibold text-[#141414] px-3 py-1 rounded-lg" type="submit">Add Task</button>
+        <button class="w-full cursor-pointer hover:bg-white/15 transition-colors bg-white/10 font-semibold px-4 py-2 rounded-lg" type="submit">Add Task</button>
     </form>
 
 	

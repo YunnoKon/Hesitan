@@ -21,7 +21,7 @@
 	{/snippet}
 	<div class="text-center flex flex-col gap-4">
 		<h1>Click <span class="text-orange-500 font-bold">the button</span> below if you proceed to do it.</h1>
-		<button onclick={clearTask} class="hover:shadow-lg hover:shadow-orange-500/30 hover:cursor-pointer transition-all duration-300 rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 py-2">I Confirm</button>
+		<button onclick={clearTask} class="hover:shadow-lg hover:shadow-orange-500/30 cursor-pointer transition-all duration-300 rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 py-2">I Confirm</button>
 		<h1 class="text-gray-500 italic text-sm">Your task data will begone for a long time! (... like really, really long)</h1>
 	</div>
 </Modal>

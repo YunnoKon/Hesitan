@@ -13,6 +13,14 @@ export default defineConfig({
   renderer: {
     plugins: [svelte(),tailwindcss()],
     publicDir: path.resolve(__dirname, 'src/renderer/public'),
+    build:{
+      rollupOptions:{
+        input:{
+          index: path.resolve(__dirname, 'src/renderer/index.html'),
+          widget: path.resolve(__dirname, 'src/renderer/widget.html')
+        }
+      }
+    }
   }
 })
 
