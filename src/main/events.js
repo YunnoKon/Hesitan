@@ -1,9 +1,12 @@
+import { Notification } from "electron";
 import { Agent, createTool } from "@mastra/core"
 import { DateTool } from "./tools"
 import { classifyError, createProvider, getConfig, replaceTemplate } from "./utils"
 import Prompt from './prompt.json';
 import Schema from './schema.js';
 import { z } from 'zod'
+
+let monitorId;
 
 export const events = {
     'agent:chat': async(e, args) => {
@@ -61,5 +64,22 @@ export const events = {
             e.sender.send('agent:chatStream', chunk)
         }
         e.sender.send('agent:chatStreamEnd')
+    },
+    'monitor:start': async(_, args) => {
+        if(args.monitoring) return;
+        const { activeWindow } = await import('get-windows');
+        monitorId = setInterval(async() => {
+            let activeWin = await activeWindow()
+            let check = args.monitorList.some(p => activeWin?.owner.path.toLowerCase().includes(p))
+            if(check){
+                new Notification({
+                    title:"Well, well, well...",
+                    body:"Perhaps you should focus back on your work right now?"
+                }).show()
+            }
+        },args.monitorInterval)
+    },
+    'monitor:end': (_ ,args) => {
+        clearInterval(monitorId)
     }
 }

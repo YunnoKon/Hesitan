@@ -16,5 +16,10 @@ export let Config = $state({
         anthropic:{
             key:""
         }
+    },
+    monitorConfig:{
+        monitoring:true,
+        monitorList:['steamapp','robloxplayer'],
+        monitorInterval:10000
     }
 })

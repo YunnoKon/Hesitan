@@ -2,10 +2,16 @@ import { contextBridge, ipcRenderer } from 'electron'
 
 // Custom APIs for renderer
 const api = {
+  // Monitor action
+  startMonitor: (args) => ipcRenderer.send('monitor:start',args),
+  endMonitor: (args) => ipcRenderer.send('monitor:end',args),
+
   // Layer action
   switchLayer: () => ipcRenderer.invoke('layer:switch'),
-  sendTask: (args) => ipcRenderer.invoke('layer:sendTask',args),
-  receiveTask: (callback) => ipcRenderer.on('layer:receiveTask',(_event, value) => callback(value)),
+  startTask: (args) => ipcRenderer.invoke('layer:startTask',args),
+  onTaskStart: (callback) => ipcRenderer.on('layer:onTaskStart',(_event, value) => callback(value)),
+  endTask: (args) => ipcRenderer.invoke('layer:endTask',args),
+  onTaskEnd: (callback) => ipcRenderer.on('layer:onTaskEnd',(_event, value) => callback(value)),
   
   // Window Action
   minimize: () => ipcRenderer.invoke('window:minimize'),

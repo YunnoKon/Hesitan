@@ -7,7 +7,7 @@
     import { createAlert, PopUpState } from '../../states/PopUpState.svelte'
 
     const saveRoadmap = async() => {
-        await db.task.bulkAdd($state.snapshot(data))
+        await db.task.bulkAdd(Object.assign($state.snapshot(data), { done: false }))
         createAlert("Agent: Roadmap Added To Task List")
         PopUpState.activeModal.pop()
     }

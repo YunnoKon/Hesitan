@@ -12,7 +12,8 @@
         description:"",
         date:today.toLocaleDateString('en-CA'),
         hour:"00",
-        minute:"00"
+        minute:"00",
+        done:false
     })
 
 	async function addTask(){

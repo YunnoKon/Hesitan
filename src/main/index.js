@@ -51,7 +51,7 @@ function createWindow() {
   })
 
   mainWindow.on('close',() => {
-    widget?.close()
+    if(mainWindow.isVisible()) widget?.close()
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
@@ -70,7 +70,7 @@ function createWidget() {
   // Phantom titlebar issue: https://github.com/electron/electron/issues/46882
   widget = new BrowserWindow({
     width: 260,
-    height: 150,
+    height: 200,
     resizable:false,
     autoHideMenuBar:true,
     transparent:true,
@@ -82,6 +82,10 @@ function createWidget() {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false
     }
+  })
+
+  widget.on('close',() => {
+    if(widget.isVisible()) mainWindow?.close()
   })
 
   if(is.dev && process.env['ELECTRON_RENDERER_URL']){
@@ -130,8 +134,11 @@ app.whenReady().then(() => {
   ipcMain.handle("layer:switch",switchWindow)
 
   // Layer transmitting handler
-  ipcMain.handle("layer:sendTask",(_,args) => {
-    widget.send("layer:receiveTask",args)
+  ipcMain.handle('layer:startTask',(_,args) => {
+    widget.send('layer:onTaskStart',args)
+  })
+  ipcMain.handle('layer:endTask',(_,args) => {
+    mainWindow.send('layer:onTaskEnd',args)
   })
 
   createWindow()

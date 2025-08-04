@@ -53,16 +53,28 @@
           </button>
       </div>
     </div>
-    <div class="p-4 bg-white/6 rounded-lg mb-3">
-      <h1 class="text-sm font-bold mb-3">Monitoring Settings</h1>
-      <div class="flex justify-between">
+    <div class="flex flex-col gap-1.5 p-4 bg-white/6 rounded-lg mb-3">
+      <h1 class="text-sm font-bold mb-1.5">Monitoring Settings</h1>
+      <div class="flex justify-between items-center">
         <p class="text-sm">Allow Monitoring</p>
         <label class="inline-flex items-center cursor-pointer">
-          <input type="checkbox" value="" class="sr-only peer">
+          <input type="checkbox" bind:checked={editableConfig.monitorConfig.monitoring} class="sr-only peer">
           <div class="relative w-11 h-6 peer-focus:outline-none rounded-full peer bg-white/10 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white  after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-500"></div>
         </label>
       </div>
-      
+      <div class="flex justify-between items-center text-sm">
+        <p>Monitored App List</p>
+        <button onclick={() => { createModal('EditMonitorList',editableConfig.monitorConfig.monitorList)}} class="hover:scale-110 cursor-pointer">
+          <img alt="edit" src="edit.svg" class="w-5 h-5"/>
+        </button>
+      </div>
+      <div class="flex flex-col text-sm">
+        <div class="flex justify-between">
+          <p>Monitor Interval</p>
+          <p>{(editableConfig.monitorConfig.monitorInterval)/1000}</p>
+        </div>
+        <input class="accent-orange-500 hover:cursor-pointer" type="range" min=5000 max=30000 step=1000 bind:value={editableConfig.monitorConfig.monitorInterval}/>
+      </div>
     </div>
     <div class="p-4 bg-white/6 rounded-lg mb-3">
       <h1 class="text-sm font-bold mb-3">Danger Zone</h1>
