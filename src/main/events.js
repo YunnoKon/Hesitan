@@ -66,8 +66,8 @@ export const events = {
         e.sender.send('agent:chatStreamEnd')
     },
     'monitor:start': async(_, args) => {
-        if(args.monitoring) return;
-        const { activeWindow } = await import('get-windows');
+        if(!args.monitoring) return;
+        const { activeWindow } = await import('@deepfocus/get-windows');
         monitorId = setInterval(async() => {
             let activeWin = await activeWindow()
             let check = args.monitorList.some(p => activeWin?.owner.path.toLowerCase().includes(p))

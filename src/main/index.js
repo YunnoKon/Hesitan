@@ -8,23 +8,24 @@ import { events } from './events'
 
 let mainWindow, widget;
 
-// Handling second instance
-// may need rewrite after changes to multi-window
-/*
 const gotTheLock = app.requestSingleInstanceLock()
-if (!gotTheLock) app.quit()
-
-app.on('second-instance', () => {
-  const windows = BrowserWindow.getAllWindows()
-  if (windows.length > 0) {
-    const mainWindow = windows[0]
-    if (mainWindow.isMinimized()) {
-      mainWindow.restore()
+if (!gotTheLock) {
+  app.quit()
+} else {
+  app.on('second-instance', () => {
+    if (mainWindow.isVisible()) {
+      if (mainWindow.isMinimized()) {
+        mainWindow.restore()
+      }
+      mainWindow.focus()
+    } else {
+      if (widget.isMinimized()) {
+        widget.restore()
+      }
+      widget.focus()
     }
-    mainWindow.focus()
-  }
-})
-*/
+  })
+}
 
 function createWindow() {
   // Create the browser window.
@@ -112,7 +113,7 @@ function switchWindow() {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   // Set app user model id for windows
-  electronApp.setAppUserModelId('com.electron')
+  electronApp.setAppUserModelId('com.hesitan.app')
 
   // Default open or close DevTools by F12 in development
   // and ignore CommandOrControl + R in production.
