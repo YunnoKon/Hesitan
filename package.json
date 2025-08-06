@@ -1,6 +1,6 @@
 {
   "name": "hesitan",
-  "version": "0.2.0-pre",
+  "version": "0.2.0-beta",
   "description": "A simple productivity app",
   "main": "./out/main/index.js",
   "author": "Yunno",

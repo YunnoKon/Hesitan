@@ -78,7 +78,7 @@
     </div>
     <div class="p-4 bg-white/6 rounded-lg mb-3">
       <h1 class="text-sm font-bold mb-3">Danger Zone</h1>
-      <button onclick={() => { createModal("TaskDeletion") }} class="bg-gradient-to-br from-orange-500 to-orange-600 py-2 px-6 rounded-lg font-semibold w-full hover:cursor-pointer hover:shadow-lg hover:shadow-orange-500/30 transition-all">Clear Task Data</button>
+      <button onclick={() => { createModal("TaskDeletion") }} class="primary-btn py-2 px-6 rounded-lg font-semibold w-full">Clear Task Data</button>
     </div>
     {#if warningSave}
     <div

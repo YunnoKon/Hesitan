@@ -103,6 +103,12 @@ margin: 0;
     }
 }
 
+@layer components {
+    .primary-btn {
+        @apply bg-gradient-to-br from-orange-500 to-orange-600 cursor-pointer hover:shadow-lg hover:shadow-orange-500/30 transition-all duration-300;
+    }
+}
+
 @theme {
     --default-font-family: "Nunito", sans-serif;
     --font-dot: "DotGothic16", "Nunito", sans-serif;

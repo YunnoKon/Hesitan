@@ -23,7 +23,7 @@
         {/each}
         <div class="flex gap-2">
             <input bind:value={path} placeholder="Insert path here..." type="text" class="focus:outline-none w-full bg-white/6 rounded-lg py-2 px-6"/>
-            <button onclick={() => { data.push(path); path = ""; }} class="font-semibold hover:shadow-lg hover:shadow-orange-500/30 hover:cursor-pointer transition-all duration-300 rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 py-2 px-4">
+            <button onclick={() => { data.push(path); path = ""; }} class="font-semibold primary-btn rounded-lg py-2 px-4">
                 Add
             </button>
         </div>

@@ -2,10 +2,13 @@
   import { extractDateInfo, avaliableMood } from '../../utils'
   import { createModal } from '../../states/PopUpState.svelte'
   import TaskList from '../../components/TaskList.svelte';
+  import { db } from '../../db'
 
   const today = extractDateInfo(new Date())
+
   let board = $state({ mood: "" })
   let emoticon = $derived(avaliableMood?.[board.mood])
+  db.mood.get(today.dateText).then((v) => { board.mood = v.mood });
 </script>
 
 <div class="bg-gradient-to-br from-[#0f1115] to-[#0b0c0f] text-white fixed h-[calc(100%-50px)] w-[80%] mx-3 mb-4 border-2 border-gray-700/50 rounded-xl right-0 overflow-y-auto">
@@ -20,7 +23,7 @@
         <div class="relative group">
             <TaskList today={new Date()}/>
 
-            <button onclick={() => createModal("TaskCreation")} class="absolute -top-5 -right-5 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full text-4xl font-bold w-14 h-14 flex items-center justify-center hover:cursor-pointer transition-all duration-300 ease-out hover:scale-110 hover:rotate-12 hover:shadow-lg hover:shadow-orange-500/30" aria-label="Add Task">
+            <button onclick={() => createModal("TaskCreation")} class="absolute -top-5 -right-5 primary-btn rounded-full text-4xl font-bold w-14 h-14 flex items-center justify-center ease-out hover:scale-110 hover:rotate-12" aria-label="Add Task">
                 <span class="transition-transform duration-300 ease-out group-hover:rotate-90">+</span>
             </button>
         </div>

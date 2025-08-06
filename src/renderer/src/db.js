@@ -3,6 +3,7 @@ import Dexie from 'dexie';
 export const db = new Dexie('AppDatabase');
 db.version(1).stores({
   task: '++id, name, description, date, hour, minute, done', 
+  mood: '++date, mood'
 });
 
 window.api.onTaskEnd((key) => {
