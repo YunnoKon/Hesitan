@@ -37,7 +37,7 @@
 
 	<div>
 		{#if data.description}
-        <p class="mb-2">
+        <p class="mb-2 select-text">
 			{data.description}
 		</p>
 		{:else}

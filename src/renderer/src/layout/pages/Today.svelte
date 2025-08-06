@@ -1,9 +1,11 @@
 <script>
-  import { extractDateInfo } from '../../utils'
+  import { extractDateInfo, avaliableMood } from '../../utils'
   import { createModal } from '../../states/PopUpState.svelte'
   import TaskList from '../../components/TaskList.svelte';
 
   const today = extractDateInfo(new Date())
+  let board = $state({ mood: "" })
+  let emoticon = $derived(avaliableMood?.[board.mood])
 </script>
 
 <div class="bg-gradient-to-br from-[#0f1115] to-[#0b0c0f] text-white fixed h-[calc(100%-50px)] w-[80%] mx-3 mb-4 border-2 border-gray-700/50 rounded-xl right-0 overflow-y-auto">
@@ -13,7 +15,7 @@
         <h2 class="font-dot text-2xl font-bold text-gray-400/80">{today.dateText}</h2>
     </div>
 
-    <div class="mb-8">
+    <div class="mb-7">
         <h2 class="text-xl text-orange-500 font-semibold mb-2">Daily Task</h2>
         <div class="relative group">
             <TaskList today={new Date()}/>
@@ -25,11 +27,18 @@
     </div>
 
     <h2 class="text-xl text-orange-500 font-semibold mb-2">Mood</h2>
-    <div class="flex text-4xl w-[30%] items-center justify-center border-gray-700/60 border-2 rounded-2xl text-white h-52 bg-white/5 backdrop-blur-sm hover:border-orange-500/80 transition-all duration-300 group">
-        <div class="text-center transition-transform duration-500 ease-out group-hover:scale-105">
-            <h1 class="font-dot mb-2 transition-transform duration-500 ease-out group-hover:-rotate-12">( ˘▽˘)っ</h1>
-            <h2 class="text-orange-500 text-2xl font-dot font-bold tracking-wider">happy.</h2>
-        </div>
-    </div>
+    <button onclick={() => createModal("MoodSelector",board)} class="cursor-pointer flex text-4xl w-[30%] items-center justify-center border-2 rounded-2xl text-white h-52 {board.mood ? "bg-white/5 backdrop-blur-sm hover:border-orange-500/80 border-gray-700/60" : "bg-transparent border-gray-700/80 hover:border-gray-600 border-dashed"} transition-all duration-300 group">
+      {#if board.mood}
+      <div class="text-center transition-transform duration-500 ease-out group-hover:scale-105">
+        <h1 class="font-dot mb-2 transition-transform duration-500 ease-out group-hover:-rotate-12">{emoticon}</h1>
+        <h2 class="text-orange-500 text-2xl font-dot font-bold tracking-wider">{board.mood}.</h2>
+      </div>
+      {:else}
+      <div>
+        <h1 class="text-gray-700/80 group-hover:text-gray-600 font-dot mb-2 transition-transform duration-500 ease-out group-hover:-rotate-12">NOTHING</h1>
+        <h2 class="text-orange-500 text-xl font-dot tracking-wider">(clicks?)</h2>
+      </div>
+      {/if}
+    </button>
   </div>
 </div>

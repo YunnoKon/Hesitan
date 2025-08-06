@@ -68,7 +68,6 @@ function createWindow() {
 }
 
 function createWidget() {
-  // Phantom titlebar issue: https://github.com/electron/electron/issues/46882
   widget = new BrowserWindow({
     width: 260,
     height: 200,

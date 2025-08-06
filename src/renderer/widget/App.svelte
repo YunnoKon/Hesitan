@@ -38,9 +38,9 @@
     })
 </script>
 
-<div class="[app-region:drag] border-gray-700/60 border-2 bg-black/80 fixed h-auto w-full rounded-xl justify-center flex-col flex px-4 py-7">
+<div class="[app-region:drag] border-gray-700/60 border-2 bg-black/80 fixed max-h-[200px] h-auto w-full rounded-xl justify-center flex-col flex px-4 py-7">
     {#if openDesc}
-    <p class="text-white text-xs break-all">
+    <p class="text-white text-sm break-all overflow-y-auto [app-region:no-drag] mb-2">
         {description}
     </p>
     {:else}

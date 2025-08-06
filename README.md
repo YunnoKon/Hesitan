@@ -18,6 +18,17 @@ Integrated with various provider, use the AI to create a clear learning roadmap,
 ### Opt-In Functionality
 Monitoring & AI functionality is purely optional, user could switch the function off or choose to not use it!
 
+## Building
+You will require Node.js v22 & npm for this.
+Run the below command to download all the dependency
+```
+npm i
+```
+Build with either of the command
+```
+npm run build:[your-os]
+npm run build
+```
 
 ## Credits
 [RemixIcon](https://github.com/Remix-Design/RemixIcon) for several icons in the project.

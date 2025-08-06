@@ -71,7 +71,7 @@
       <div class="flex flex-col text-sm">
         <div class="flex justify-between">
           <p>Monitor Interval</p>
-          <p>{(editableConfig.monitorConfig.monitorInterval)/1000}</p>
+          <p class="font-bold">{(editableConfig.monitorConfig.monitorInterval)/1000}s</p>
         </div>
         <input class="accent-orange-500 hover:cursor-pointer" type="range" min=5000 max=30000 step=1000 bind:value={editableConfig.monitorConfig.monitorInterval}/>
       </div>

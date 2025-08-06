@@ -1,6 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=DotGothic16&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 @import "tailwindcss";
 
+/* Scrollbar Style */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    @apply bg-transparent rounded-3xl;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    @apply cursor-pointer bg-white/10;
+}
+
 @theme {
     --default-font-family: "Nunito", sans-serif;
     --font-dot: "DotGothic16", "Nunito", sans-serif;
