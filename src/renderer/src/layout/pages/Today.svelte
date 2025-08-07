@@ -38,8 +38,8 @@
       </div>
       {:else}
       <div>
-        <h1 class="text-gray-700/80 group-hover:text-gray-600 font-dot mb-2 transition-transform duration-500 ease-out group-hover:-rotate-12">NOTHING</h1>
-        <h2 class="text-orange-500 text-xl font-dot tracking-wider">(clicks?)</h2>
+        <h1 class="font-bold text-2xl text-gray-700/80 group-hover:text-gray-600 font-dot mb-2 transition-transform duration-500 ease-out group-hover:-rotate-12">(づ ᴗ _ᴗ)づ⁭</h1>
+        <h2 class="text-orange-500 text-xl font-dot tracking-wider">empty here.</h2>
       </div>
       {/if}
     </button>

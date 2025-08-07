@@ -30,6 +30,11 @@ npm run build:[your-os]
 npm run build
 ```
 
+## API Keys
+To use the chatbot, you will need to get an API key from the providers. To note that some free API key may collect your data, so use it at your own risk.
+
+Ollama will be supported in future.
+
 ## Credits
 [RemixIcon](https://github.com/Remix-Design/RemixIcon) for several icons in the project.
 
